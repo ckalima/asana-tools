@@ -160,7 +160,11 @@ while current_date <= end_date:
     points_on_day_actual = (points_completed_by_date_actual.get(current_date.strftime(DATE_FORMAT)) or 0)
     points_remaining_actual -= points_on_day_actual
     # linear
-    linear_burn = days_remaining * avg_points_per_day
+    if days_remaining == days:
+        linear_burn = points_estimated
+    else:
+        linear_burn = days_remaining * avg_points_per_day
+
     if current_date <= datetime.datetime.today():
         burndown.append([current_date.strftime(DATE_FORMAT), points_remaining, points_remaining_actual, linear_burn])
     else:
