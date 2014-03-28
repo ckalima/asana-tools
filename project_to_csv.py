@@ -38,7 +38,7 @@ now = datetime.datetime.utcnow()
 tasks_list_csv = 'project_task_%s.csv' % now.strftime(DATETIME_FORMAT)
 burndown_csv = 'burndown_%s.csv' % now.strftime(DATETIME_FORMAT)
 points_completed_by_date, points_completed_by_date_actual = {}, {}
-tasks_list.append(['assignee', 'task', 'estimated', 'actual', 'due on', 'completed at'])
+tasks_list.append(['assignee', 'task', 'estimated', 'actual', 'created at', 'due on', 'completed at'])
 
 if not args.input and not args.projectid:
     print "An input file or Asana project ID must be specified."
@@ -98,6 +98,7 @@ for task in tasks:
     assignee = task['assignee']['name'].encode('ascii', 'replace')
     name = task['name'].encode('ascii', 'replace')
     completed = task['completed']
+    created_at = dateutil.parser.parse(task['created_at']).strftime(DATE_FORMAT)
     # dates
     try:
         due_on = dateutil.parser.parse(task['due_on']).strftime(DATE_FORMAT)
@@ -135,7 +136,7 @@ for task in tasks:
     points_estimated += int(estimated)
     points_actual += int(actual)
 
-    tasks_list.append([assignee, name, estimated, actual, due_on, completed_at])
+    tasks_list.append([assignee, name, estimated, actual, created_at, due_on, completed_at])
 
 # stats
 completed_percentage = round((float(estimated_points_completed) / points_estimated) * 100, 2)
