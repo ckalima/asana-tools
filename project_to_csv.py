@@ -95,10 +95,13 @@ end_date = dateutil.parser.parse(end)
 # process asana tasks
 for task in tasks:
     # task metadata
-    assignee = task['assignee']['name'].encode('ascii', 'replace')
     name = task['name'].encode('ascii', 'replace')
     completed = task['completed']
     created_at = dateutil.parser.parse(task['created_at']).strftime(DATE_FORMAT)
+    try:
+        assignee = task['assignee']['name'].encode('ascii', 'replace')
+    except TypeError:
+        assignee = None
     # dates
     try:
         due_on = dateutil.parser.parse(task['due_on']).strftime(DATE_FORMAT)
