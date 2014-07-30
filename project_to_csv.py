@@ -24,7 +24,7 @@ args = parser.parse_args()
 
 
 # time estimatation regex (e.g. [2:1.5], [estimated:actual])
-pattern_estimate = '^\s*\[\s*(\d+\.?\d*|\.?\d+)(?:[-:|/\s]+(\d*\.?\d*))?'
+pattern_estimate = '^\s*\[\s*(\?|\d+\.?\d*|\.?\d+)(?:[-:|/\s]+(\d*\.?\d*))?'
 # iteration date pattern (e.g. 2014-03-01 - 2014-03-08, start date - end date)
 pattern_dates = '\[(20\d{2}-\d{1,2}-\d{1,2})[-:|\s]+(20\d{2}-\d{1,2}-\d{1,2})\]'
 
@@ -116,7 +116,10 @@ for task in tasks:
     match = re.search(pattern_estimate, name)
     estimated, actual = 0, 0
     if match:
-        estimated = float(match.group(1))
+        if match.group(1) == '?': # unknown
+            estimated = 0.0
+        else:
+            estimated = float(match.group(1))
         actual = float(match.group(2) or 0.0)
     if completed:
         if actual == 0:
