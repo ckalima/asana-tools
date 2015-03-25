@@ -131,10 +131,11 @@ for task in tasks:
             estimated = 0.0
         else:
             estimated = float(match.group(1))
-        actual = float(match.group(2) or 0.0)
+        if completed:
+            actual = float(match.group(2) or estimated)
+        else:
+            actual = float(match.group(2) or 0.0)
     if completed:
-        if actual == 0:
-            actual = estimated
         estimated_points_completed += estimated
         actual_points_completed += actual
         # estimated points
