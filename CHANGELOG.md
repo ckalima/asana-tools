@@ -4,6 +4,11 @@ Changelog
 %%version%% (unreleased)
 ------------------------
 
+- Merge branch 'release/v0.3.0' into develop. [Christopher Kalima]
+
+0.3.0 (2015-03-25)
+------------------
+
 Changes
 ~~~~~~~
 
@@ -11,6 +16,15 @@ Changes
 
 Other
 ~~~~~
+
+- Merge branch 'release/v0.3.0' [Christopher Kalima]
+
+- V0.3.0. [Christopher Kalima]
+
+0.2.0 (2015-03-24)
+------------------
+
+- Merge branch 'release/v0.2.0' [Christopher Kalima]
 
 - Fix estimate pattern to include and process '?' [Christopher Kalima]
 
