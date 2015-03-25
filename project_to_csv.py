@@ -7,7 +7,7 @@ import os
 import re
 import sys
 
-from asana import asana
+import asana
 
 DEBUG = False
 DATE_FORMAT = '%Y-%m-%d'
@@ -67,8 +67,8 @@ if args.input:
     else:
         end = raw_input("Sprint end date (YYYY-MM-DD): ")
 elif args.projectid:
-    asana_api = asana.AsanaAPI(ASANA_API_KEY, debug=DEBUG)
-    asana_project = asana_api.get_project(int(args.projectid, 10))
+    client = asana.Client.basic_auth(ASANA_API_KEY)
+    asana_project = client.projects.find_by_id(int(args.projectid, 10))
     # update default file names
     tasks_list_csv = '%s_tasks_%s.csv' % (asana_project['id'], now.strftime(DATETIME_FORMAT))
     burndown_csv = '%s_burndown_%s.csv' % (asana_project['id'], now.strftime(DATETIME_FORMAT))
@@ -84,9 +84,9 @@ elif args.projectid:
     # for additional task details, need to query individual tasks
     print "Gathering tasks from '%s'\nhttps://app.asana.com/0/%s" % (asana_project['name'], args.projectid)
     tasks = []
-    project_tasks = asana_api.get_project_tasks(int(args.projectid, 10))
+    project_tasks = client.tasks.find_by_project(int(args.projectid, 10))
     for task in project_tasks:
-        tasks.append(asana_api.get_task(task['id']))
+        tasks.append(client.tasks.find_by_id(task['id']))
 
 # convert start/end to datetime
 start_date = dateutil.parser.parse(start)
