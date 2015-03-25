@@ -1,0 +1,15 @@
+asana==0.1.4
+distribute==0.6.28
+gitchangelog==2.2.0
+ipython==3.0.0
+oauthlib==0.7.2
+python-dateutil==2.4.1
+readline==6.2.4.1
+requests==2.6.0
+requests-oauthlib==0.4.2
+six==1.9.0
+stevedore==0.7.2
+virtualenv==1.8.4
+virtualenv-clone==0.2.4
+virtualenvwrapper==3.6
+wsgiref==0.1.2
