@@ -4,6 +4,14 @@ Changelog
 %%version%% (unreleased)
 ------------------------
 
+Changes
+~~~~~~~
+
+- Initial commit of changelog. [Christopher Kalima]
+
+Other
+~~~~~
+
 - Fix estimate pattern to include and process '?' [Christopher Kalima]
 
   [?] notation is used for unknown task duration/estimation. was
