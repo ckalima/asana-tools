@@ -36,6 +36,7 @@ pattern_dates = '\[(20\d{2}-\d{1,2}-\d{1,2})[-:|\s]+(20\d{2}-\d{1,2}-\d{1,2})\]'
 # initialize counts
 points_estimated, points_actual = 0, 0
 points_core, points_custom = 0, 0
+points_core_estimated, points_custom_estimated = 0, 0
 estimated_points_completed, actual_points_completed = 0, 0
 
 # output setup
@@ -155,9 +156,11 @@ for task in tasks:
     points_actual += float(actual)
 
     if is_core:
+        points_core_estimated += float(estimated)
         points_core += float(actual)
 
     if is_custom:
+        points_custom_estimated += float(estimated)
         points_custom += float(actual)
 
     tasks_list.append([assignee, name, estimated, actual, created_at, due_on, completed_at])
@@ -165,7 +168,9 @@ for task in tasks:
 # stats
 completed_percentage = round((float(estimated_points_completed) / points_estimated) * 100.0, 2)
 percentage_core = round((float(points_core) / points_actual) * 100.0, 2)
+percentage_core_estimated = round((float(points_core_estimated) / points_estimated) * 100.0, 2)
 percentage_custom = round((float(points_custom) / points_actual) * 100.0, 2)
+percentage_custom_estimated = round((float(points_custom_estimated) / points_estimated) * 100.0, 2)
 points_product = points_core + points_custom
 percentage_product = percentage_core + percentage_custom
 
@@ -211,8 +216,14 @@ with open(burndown_csv, 'w') as fp:
 print "Sprint from %s to %s (%s days)" % (start, end, days)
 print "Estimated: %s" % points_estimated
 print "Actual: %s" % points_actual
+print "--------------------"
 print "Completed [Estimated]: %s (%s%%)" % (estimated_points_completed, completed_percentage)
 print "Completed [Actual]: %s" % actual_points_completed
-print "Actual points on Core: %s (%s%%)" % (points_core, percentage_core)
-print "Actual points on Custom: %s (%s%%)" % (points_custom, percentage_custom)
-print "Actual points on Product: %s (%s%%)" % (points_product, percentage_product)
+print "--------------------"
+print "Core [Estimated]: %s (%s%%)" % (points_core_estimated, percentage_core_estimated)
+print "Core [Actual]: %s (%s%%)" % (points_core, percentage_core)
+print "--------------------"
+print "Custom [Estimate]: %s (%s%%)" % (points_custom_estimated, percentage_custom_estimated)
+print "Custom [Actual]: %s (%s%%)" % (points_custom, percentage_custom)
+print "--------------------"
+print "Product [Actual]: %s (%s%%)" % (points_product, percentage_product)
